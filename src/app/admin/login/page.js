@@ -5,7 +5,7 @@ import { Lock, Mail, ShieldCheck, ArrowRight, Loader2, AlertCircle, Sparkles } f
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@arfashion.com');
+  const [email, setEmail] = useState('admin@thepremiums.in');
   const [password, setPassword] = useState('Admin@12345');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -53,7 +53,7 @@ export default function AdminLoginPage() {
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 mx-auto flex items-center justify-center font-black text-2xl text-white shadow-xl shadow-emerald-900/50 mb-3">
             AR
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">AR FASHION HOUSE</h1>
+          <h1 className="text-2xl font-black text-white tracking-tight">THE PREMIUMS SOCIETY</h1>
           <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">
             Separate Store Management Portal
           </p>
@@ -78,7 +78,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@arfashion.com"
+                placeholder="admin@thepremiums.in"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               />
             </div>
@@ -123,7 +123,7 @@ export default function AdminLoginPage() {
               <span>Default Owner Credentials (Pre-seeded):</span>
             </p>
             <div className="text-[11px] text-slate-400 space-y-0.5 font-mono">
-              <div>Email: <strong className="text-slate-200">admin@arfashion.com</strong></div>
+              <div>Email: <strong className="text-slate-200">admin@thepremiums.in</strong></div>
               <div>Password: <strong className="text-slate-200">Admin@12345</strong></div>
             </div>
           </div>

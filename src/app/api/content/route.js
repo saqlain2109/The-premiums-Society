@@ -20,7 +20,7 @@ export async function GET() {
           heroSecondaryBtnLink: '/shop?category=mens-panjabi-kurta',
           announcementBar: '✨ Eid & Wedding Festive Collection 2026 is LIVE! Fast WhatsApp Order & Home Delivery.',
           brandStoryTitle: 'Preserving Heritage, Crafting Contemporary Luxury',
-          brandStoryText: 'AR Fashion House was born out of a profound admiration for Bengal rich handloom traditions combined with modern tailored precision.',
+          brandStoryText: 'The Premiums Society was born out of a profound admiration for Bengal rich handloom traditions combined with modern tailored precision.',
           brandStoryImage: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80',
         },
       });

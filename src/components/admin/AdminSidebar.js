@@ -85,7 +85,7 @@ export default function AdminSidebar({ userRole = 'ADMIN', categoryCount = 0 }) 
               AR
             </div>
             <div className="truncate">
-              <span className="font-bold text-white tracking-wide text-sm block">AR FASHION</span>
+              <span className="font-bold text-white tracking-wide text-sm block">THE PREMIUMS</span>
               <span className="text-[10px] text-emerald-400 uppercase tracking-wider font-semibold">Admin Portal</span>
             </div>
           </Link>

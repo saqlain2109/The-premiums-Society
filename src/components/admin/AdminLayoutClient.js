@@ -12,7 +12,7 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
 
   const [user, setUser] = useState(serverUser);
   const [checkingAuth, setCheckingAuth] = useState(!serverUser && !isLoginPage);
-  const [storeName, setStoreName] = useState('AR Fashion House');
+  const [storeName, setStoreName] = useState('The Premiums Society');
 
   useEffect(() => {
     fetch('/api/settings')
@@ -82,7 +82,7 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
     );
   }
 
-  const currentUser = user || serverUser || { name: 'Store Owner', email: 'admin@arfashion.com', role: 'ADMIN' };
+  const currentUser = user || serverUser || { name: 'Store Owner', email: 'admin@thepremiums.in', role: 'ADMIN' };
 
   return (
     <div className="min-h-screen bg-slate-100 flex text-slate-800">

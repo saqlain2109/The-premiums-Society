@@ -14,10 +14,10 @@ export async function generateMetadata({ params }) {
     where: { slug: params.slug },
   });
 
-  if (!policy) return { title: 'Policy | AR Fashion House' };
+  if (!policy) return { title: 'Policy | The Premiums Society' };
 
   return {
-    title: `${policy.title} | AR Fashion House`,
+    title: `${policy.title} | The Premiums Society`,
   };
 }
 
@@ -83,7 +83,7 @@ export default async function PolicyDetailPage({ params }) {
               {policy.title}
             </h1>
             <p className="text-xs text-slate-400 mt-1">
-              Last updated on: {formatDate(policy.updatedAt)} &bull; Official AR Fashion House Policy
+              Last updated on: {formatDate(policy.updatedAt)} &bull; Official The Premiums Society Policy
             </p>
           </div>
 

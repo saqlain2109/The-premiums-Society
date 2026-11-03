@@ -4,16 +4,16 @@ const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('--- Starting AR Fashion House Database Seeding ---');
+  console.log('--- Starting The Premiums Society Database Seeding ---');
 
   // 1. Admin User
   const adminPassword = await bcrypt.hash('Admin@12345', 10);
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@arfashion.com' },
+    where: { email: 'admin@thepremiums.in' },
     update: {},
     create: {
-      name: 'AR Fashion Admin',
-      email: 'admin@arfashion.com',
+      name: 'The Premiums Society Admin',
+      email: 'admin@thepremiums.in',
       password: adminPassword,
       role: 'ADMIN',
     },
@@ -401,7 +401,7 @@ async function main() {
     {
       orderNumber: "AR-20261030-1003",
       customerName: "Rohan Verma",
-      customerPhone: "+917304396709",
+      customerPhone: "+919920517851",
       deliveryAddress: "C-42, Defence Colony, Near Ring Road",
       city: "New Delhi",
       postalCode: "110024",
@@ -438,7 +438,7 @@ async function main() {
     {
       orderNumber: "AR-20261031-1004",
       customerName: "Pooja Kulkarni",
-      customerPhone: "+918080010107",
+      customerPhone: "+919920517851",
       deliveryAddress: "Apartment 6A, Koregaon Park Plaza",
       city: "Pune",
       postalCode: "411001",
@@ -493,21 +493,21 @@ async function main() {
 
   // 5. Store Settings
   const storeSettingsData = {
-    businessName: "AR Fashion House",
-    storeLogo: null,
-    primaryPhone: "+917304396709",
-    secondaryPhone: "+918080010107",
+    businessName: "The Premiums Society",
+    storeLogo: "/images/logo.png",
+    primaryPhone: "+919920517851",
+    secondaryPhone: "+919920517851",
     defaultRecipient: "primary",
-    businessEmail: "contact@arfashionhouse.com",
+    businessEmail: "contact@thepremiums.in",
     shippingCharge: 100,
     freeShippingThreshold: 2000,
     currency: "INR",
     currencySymbol: "₹",
     storeAnnouncement: "Special Festive Offer: FREE Delivery on orders over ₹2000 across India!",
     announcementActive: true,
-    facebookUrl: "https://facebook.com/arfashionhouse",
-    instagramUrl: "https://instagram.com/arfashionhouse",
-    whatsappUrl: "https://wa.me/917304396709",
+    facebookUrl: "https://www.instagram.com/the_premiumss?xtok=MXBtOTNoc2tiM3RxMg==",
+    instagramUrl: "https://www.instagram.com/the_premiumss?xtok=MXBtOTNoc2tiM3RxMg==",
+    whatsappUrl: "https://wa.me/919920517851",
     address: null,
   };
 
@@ -532,7 +532,7 @@ async function main() {
     heroSecondaryBtnLink: "/shop?category=mens-panjabi-kurta",
     announcementBar: "✨ Festive Collection 2026 is LIVE! Direct WhatsApp Order & All-India Express Delivery.",
     brandStoryTitle: "Preserving Heritage, Crafting Contemporary Luxury",
-    brandStoryText: "AR Fashion House was born out of a profound admiration for Indian handloom traditions combined with modern tailored precision. Every piece in our boutique undergoes rigorous fabric selection, detailed hand-embroidery, and careful tailoring to ensure you exude unmatched elegance.",
+    brandStoryText: "The Premiums Society was born out of a profound admiration for Indian handloom traditions combined with modern tailored precision. Every piece in our boutique undergoes rigorous fabric selection, detailed hand-embroidery, and careful tailoring to ensure you exude unmatched elegance.",
     brandStoryImage: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
   };
 
@@ -552,12 +552,12 @@ async function main() {
       id: "privacy-policy",
       slug: "privacy-policy",
       title: "Privacy Policy",
-      content: `### Privacy Policy for AR Fashion House
+      content: `### Privacy Policy for The Premiums Society
 
-At **AR Fashion House**, accessible from our online portal, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by AR Fashion House and how we use it.
+At **The Premiums Society**, accessible from our online portal, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by The Premiums Society and how we use it.
 
 #### 1. Information We Collect
-When you browse or place an order via WhatsApp through AR Fashion House, we may ask you to provide certain personally identifiable information:
+When you browse or place an order via WhatsApp through The Premiums Society, we may ask you to provide certain personally identifiable information:
 - Full Name
 - Mobile / WhatsApp Number
 - Full Delivery Address and PIN Code
@@ -575,9 +575,9 @@ We employ industry-standard security measures, password encryption, and secure d
 
 #### 4. Contact Us
 If you have any questions or suggestions regarding our Privacy Policy, please reach out to us at:
-- **Email:** contact@arfashionhouse.com
-- **WhatsApp Helpline:** +91 7304396709
-- **Secondary Helpline:** +91 8080010107`,
+- **Email:** contact@thepremiums.in
+- **WhatsApp Helpline:** +91 9920517851
+- **Secondary Helpline:** +91 9920517851`,
     },
     {
       id: "shipping-policy",
@@ -585,7 +585,7 @@ If you have any questions or suggestions regarding our Privacy Policy, please re
       title: "Shipping & Delivery Policy",
       content: `### Shipping & Delivery Policy
 
-Thank you for shopping at **AR Fashion House**! Here are the terms and conditions that constitute our Shipping Policy.
+Thank you for shopping at **The Premiums Society**! Here are the terms and conditions that constitute our Shipping Policy.
 
 #### 1. All-India Delivery Coverage
 We deliver nationwide across all pin codes in India through trusted express courier partners (e.g. Delhivery, Blue Dart, DTDC, India Post Express).
@@ -610,7 +610,7 @@ We support Cash on Delivery (COD), UPI (Google Pay, PhonePe, Paytm), and Direct 
       title: "Return & Refund Policy",
       content: `### Return & Exchange Policy
 
-At **AR Fashion House**, our customer satisfaction is paramount. If you are not completely satisfied with your purchase, we are here to assist you with our seamless return and size exchange policy.
+At **The Premiums Society**, our customer satisfaction is paramount. If you are not completely satisfied with your purchase, we are here to assist you with our seamless return and size exchange policy.
 
 #### 1. Eligibility for Return or Exchange
 - Items must be requested for return/exchange within **7 days** of receiving the parcel.
@@ -619,7 +619,7 @@ At **AR Fashion House**, our customer satisfaction is paramount. If you are not 
 
 #### 2. Size Exchange Process
 If the size you ordered does not fit perfectly:
-1. Contact us on WhatsApp (+91 7304396709) with your Order ID and photo of the item.
+1. Contact us on WhatsApp (+91 9920517851) with your Order ID and photo of the item.
 2. We will check available variant inventory and arrange a pickup/replacement delivery.
 3. Hassle-free exchange assistance provided by our dedicated concierge.
 
@@ -635,7 +635,7 @@ If an eligible returned item cannot be replaced due to out-of-stock inventory, a
       title: "Terms and Conditions",
       content: `### Terms and Conditions
 
-Welcome to **AR Fashion House**! By accessing this website or placing orders through our customer portal and WhatsApp channels, you agree to comply with and be bound by the following terms and conditions.
+Welcome to **The Premiums Society**! By accessing this website or placing orders through our customer portal and WhatsApp channels, you agree to comply with and be bound by the following terms and conditions.
 
 #### 1. Product Information & Pricing
 - We make every effort to display the colors, fabrics, and details of our products accurately. However, slight variations may occur due to photographic lighting or monitor displays.
@@ -643,13 +643,13 @@ Welcome to **AR Fashion House**! By accessing this website or placing orders thr
 
 #### 2. Order Placement & WhatsApp Checkout
 - Placing an order through our website records the order in our database and generates a detailed order message for WhatsApp.
-- An order is finalized and confirmed once our sales team verifies stock and communication occurs via WhatsApp or phone (+91 7304396709 / +91 8080010107).
+- An order is finalized and confirmed once our sales team verifies stock and communication occurs via WhatsApp or phone (+91 9920517851 / +91 9920517851).
 
 #### 3. Stock Availability
 - Inventory is updated in real time. In the rare event that an item becomes out-of-stock after order placement, our team will inform you promptly and offer an exchange or refund.
 
 #### 4. Intellectual Property
-All content on this website, including photographs, branding, logos, and descriptions, are the intellectual property of **AR Fashion House** and may not be reproduced without written permission.`,
+All content on this website, including photographs, branding, logos, and descriptions, are the intellectual property of **The Premiums Society** and may not be reproduced without written permission.`,
     },
   ];
 

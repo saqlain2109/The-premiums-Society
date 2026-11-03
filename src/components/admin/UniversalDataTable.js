@@ -70,8 +70,8 @@ export default function UniversalDataTable({
   const [density, setDensity] = useState('normal');
 
   // 5. Freeze Header & Columns (Rule 2.A.3 & 2.A.4)
-  const [freezeHeader, setFreezeHeader] = useState(true);
-  const [freezeColumns, setFreezeColumns] = useState(true);
+  const [freezeHeader, setFreezeHeader] = useState(false);
+  const [freezeColumns, setFreezeColumns] = useState(false);
 
   // 6. Auto-Wrap Long Data (Rule 2.A.7)
   const [autoWrap, setAutoWrap] = useState(false);

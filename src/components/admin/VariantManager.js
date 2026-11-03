@@ -137,7 +137,7 @@ export default function VariantManager({
             </h4>
           </div>
           <span className="text-xs text-slate-500">
-            Configure specific sizes & colours for AR Fashion House
+            Configure specific sizes & colours for The Premiums Society
           </span>
         </div>
 

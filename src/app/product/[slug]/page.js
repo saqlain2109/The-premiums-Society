@@ -12,11 +12,11 @@ export async function generateMetadata({ params }) {
     select: { name: true, description: true, mainImage: true },
   });
 
-  if (!product) return { title: 'Product Not Found | AR Fashion House' };
+  if (!product) return { title: 'Product Not Found | The Premiums Society' };
 
   return {
-    title: `${product.name} | AR Fashion House`,
-    description: product.description?.slice(0, 160) || 'Shop online at AR Fashion House.',
+    title: `${product.name} | The Premiums Society`,
+    description: product.description?.slice(0, 160) || 'Shop online at The Premiums Society.',
     openGraph: {
       images: product.mainImage ? [product.mainImage] : [],
     },

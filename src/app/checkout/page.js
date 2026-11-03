@@ -179,7 +179,7 @@ export default function CheckoutPage() {
                     <input
                       type="tel"
                       required
-                      placeholder="e.g. 7304396709 or +91 9876543210"
+                      placeholder="e.g. 9920517851 or +91 9876543210"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       className="w-full p-3 bg-stone-50 border border-stone-300 rounded-xl font-mono font-bold focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600"

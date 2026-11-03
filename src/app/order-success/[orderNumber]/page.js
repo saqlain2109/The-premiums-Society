@@ -32,7 +32,7 @@ export default async function OrderSuccessPage({ params, searchParams }) {
     notFound();
   }
 
-  const cleanPhone = (settings?.primaryPhone || '+917304396709').replace(/[^0-9]/g, '');
+  const cleanPhone = (settings?.primaryPhone || '+919920517851').replace(/[^0-9]/g, '');
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">

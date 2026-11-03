@@ -3,7 +3,7 @@ import { CartProvider } from '@/components/store/CartContext';
 import CartDrawer from '@/components/store/CartDrawer';
 
 export const metadata = {
-  title: 'AR Fashion House | Handcrafted Ethnic & Contemporary Clothing',
+  title: 'The Premiums Society | Handcrafted Ethnic & Contemporary Clothing',
   description: 'Shop exclusive Panjabis, Banarasi sarees, luxury kurtis, and casual apparel with fast nationwide delivery and WhatsApp ordering.',
 };
 

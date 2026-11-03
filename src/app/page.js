@@ -11,7 +11,11 @@ import {
   MessageSquare,
   Star,
   CheckCircle2,
+  Crown,
+  Instagram,
   Phone,
+  Flame,
+  ArrowUpRight,
 } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 
@@ -19,7 +23,6 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function HomePage() {
-  // Fetch real database content
   const [settings, content, categories, featuredProducts, newArrivals] = await Promise.all([
     prisma.storeSettings.findUnique({ where: { id: 'default' } }),
     prisma.websiteContent.findUnique({ where: { id: 'default' } }),
@@ -43,131 +46,181 @@ export default async function HomePage() {
   ]);
 
   const currencySymbol = settings?.currencySymbol || '₹';
-  const waPhone = settings?.primaryPhone || '+917304396709';
+  const waPhone = settings?.primaryPhone || '+919920517851';
   const cleanPhone = waPhone.replace(/[^0-9]/g, '');
+  const instaUrl = settings?.instagramUrl || 'https://www.instagram.com/the_premiumss?xtok=MXBtOTNoc2tiM3RxMg==';
 
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50 overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-[#071712] text-stone-100 overflow-x-hidden selection:bg-amber-400/20 selection:text-amber-200">
       <StoreHeader categories={categories} settings={settings} content={content} />
 
       <main className="flex-1">
-        {/* 1. High-Fashion Hero Showcase Section */}
-        <section className="relative overflow-hidden bg-slate-950 text-white min-h-[560px] sm:min-h-[620px] flex items-center">
-          {/* Hero background image with dark overlay */}
-          {content?.heroImage && (
-            <div className="absolute inset-0 z-0">
-              <img
-                src={content.heroImage}
-                alt="AR Fashion Showcase"
-                className="w-full h-full object-cover object-center opacity-35"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent" />
-            </div>
-          )}
+        {/* 1. Ultra Luxury Royalty Hero Section */}
+        <section className="relative min-h-[640px] sm:min-h-[720px] flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#02130e] via-[#052219] to-[#071712] border-b border-amber-500/20">
+          {/* Subtle Ambient Radial Lighting Glows */}
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-emerald-500/10 via-amber-500/15 to-transparent blur-[120px] pointer-events-none rounded-full" />
+          <div className="absolute bottom-0 right-10 w-96 h-96 bg-emerald-600/10 blur-[100px] pointer-events-none" />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 w-full">
-            <div className="max-w-2xl space-y-6">
-              {/* Luxury Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold uppercase tracking-widest">
-                <Sparkles size={13} className="text-amber-400" />
-                <span>Haute Couture & Festive Collection 2026</span>
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 space-y-7 text-center lg:text-left">
+              {/* Royal Crown Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/40 text-amber-300 text-xs font-semibold tracking-wider shadow-lg shadow-black/40">
+                <Crown size={15} className="text-amber-400 drop-shadow animate-pulse" />
+                <span className="uppercase tracking-[0.2em] font-brand-title text-[11px]">The Royal Couture Collection 2026</span>
               </div>
 
               {/* Main Headline */}
-              <h1 className="font-serif-luxury text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15]">
-                {content?.heroHeading || 'Elegance Reimagined for Every Celebration'}
+              <h1 className="font-serif-luxury text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.08]">
+                Where <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-100 bg-clip-text text-transparent">Royalty</span> Meets Modern Elegance.
               </h1>
 
               {/* Subheading */}
-              <p className="text-sm sm:text-base text-stone-300 leading-relaxed max-w-xl font-normal">
-                {content?.heroSubheading ||
-                  'Explore hand-crafted Panjabis, Banarasi Silks, and Contemporary Kurtis made with pure organic fabrics and tailored for supreme perfection.'}
+              <p className="text-sm sm:text-lg text-emerald-100/80 leading-relaxed max-w-2xl font-light">
+                Discover handcrafted luxury Panjabis, celebratory silhouettes, and custom couture designed exclusively for the discerning gentlemen & ladies of <span className="text-amber-300 font-medium">The Premiums Society</span>.
               </p>
 
-              {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
                 <Link
-                  href={content?.heroPrimaryBtnLink || '/shop'}
-                  className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold rounded-2xl text-xs sm:text-sm shadow-xl shadow-emerald-950/50 transition-all flex items-center gap-2 group"
+                  href="/shop"
+                  className="px-8 py-4 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black rounded-2xl text-xs sm:text-sm shadow-xl shadow-amber-500/20 hover:shadow-amber-500/40 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2.5 group"
                 >
-                  <span>{content?.heroPrimaryBtnText || 'Explore Collection'}</span>
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  <ShoppingBag size={18} />
+                  <span>Explore Society Wardrobe</span>
+                  <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
                 </Link>
 
-                <Link
-                  href={content?.heroSecondaryBtnLink || '#categories'}
-                  className="px-7 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-2xl text-xs sm:text-sm backdrop-blur-xs transition-all border border-white/20"
+                <a
+                  href={`https://wa.me/${cleanPhone}?text=Hello%20The%20Premiums%20Society,%20I%20am%20interested%20in%20your%20exclusive%20couture%20collection.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-7 py-4 bg-white/5 hover:bg-white/10 text-emerald-200 hover:text-white font-bold rounded-2xl text-xs sm:text-sm backdrop-blur-md transition-all border border-emerald-500/30 hover:border-amber-400/50 flex items-center gap-2 shadow-sm"
                 >
-                  {content?.heroSecondaryBtnText || 'Browse Categories'}
-                </Link>
+                  <MessageSquare size={17} className="text-emerald-400" />
+                  <span>WhatsApp Concierge</span>
+                </a>
+              </div>
+
+              {/* Quick Trust Highlights */}
+              <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-stone-400">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="text-stone-300 font-medium">Handcrafted in India</span>
+                </div>
+                <div className="w-1 h-1 rounded-full bg-stone-700" />
+                <div className="flex items-center gap-1.5 text-amber-300/90 font-medium">
+                  <ShieldCheck size={15} />
+                  <span>100% Supreme Organic Fabrics</span>
+                </div>
+                <div className="w-1 h-1 rounded-full bg-stone-700" />
+                <div className="flex items-center gap-1.5 text-emerald-300/90 font-medium">
+                  <Truck size={15} />
+                  <span>Express Nationwide Shipping</span>
+                </div>
               </div>
             </div>
+
+            {/* Right Visual Card with Glowing Golden Frame */}
+            <div className="lg:col-span-5 relative flex justify-center">
+              <div className="relative group w-72 sm:w-84 md:w-96 aspect-square rounded-full p-2 bg-gradient-to-tr from-amber-500/40 via-emerald-400/20 to-amber-300/40 shadow-2xl shadow-emerald-950/80">
+                {/* Glowing Ring Effect */}
+                <div className="absolute inset-0 rounded-full border border-amber-400/40 animate-pulse" />
+                <div className="w-full h-full rounded-full overflow-hidden bg-[#041a13] p-6 flex flex-col items-center justify-center text-center relative border border-amber-500/30">
+                  <img
+                    src="/images/logo.png"
+                    alt="The Premiums Society Crown Logo"
+                    className="w-48 h-48 sm:w-56 sm:h-56 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500"
+                  />
+                  
+                  {/* Floating Instagram pill */}
+                  <a
+                    href={instaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-900/60 via-pink-900/60 to-amber-900/60 border border-pink-400/40 hover:border-amber-300 text-[11px] font-bold text-white flex items-center gap-2 backdrop-blur-md shadow-lg hover:scale-105 transition-all"
+                  >
+                    <Instagram size={14} className="text-pink-400" />
+                    <span>@the_premiumss</span>
+                    <ArrowUpRight size={13} className="text-amber-400" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 
-        {/* 2. Value Propositions Bar */}
-        <section className="bg-white border-b border-stone-200/90 py-7">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100">
-                <Truck size={20} />
+        {/* 2. Floating Luxury Society Highlights Bar */}
+        <section className="bg-[#041d15] border-b border-amber-500/15 py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div className="flex items-center gap-4 p-3 rounded-2xl bg-white/[0.02] border border-white/5">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/30">
+                <Crown size={22} />
               </div>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-900">Nationwide Express Delivery</h4>
-                <p className="text-[11px] text-slate-500">
-                  Free delivery on orders over {formatPrice(settings?.freeShippingThreshold ?? 2000, currencySymbol)}
+                <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide">Royal Needlework</h4>
+                <p className="text-[11px] text-emerald-200/60">Zari, Resham & hand embroidery</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 p-3 rounded-2xl bg-white/[0.02] border border-white/5">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
+                <Truck size={22} />
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide">Nationwide Express</h4>
+                <p className="text-[11px] text-emerald-200/60">
+                  Free over {formatPrice(settings?.freeShippingThreshold ?? 2000, currencySymbol)}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center shrink-0 border border-teal-100">
-                <MessageSquare size={20} />
+            <div className="flex items-center gap-4 p-3 rounded-2xl bg-white/[0.02] border border-white/5">
+              <div className="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center shrink-0 border border-teal-500/30">
+                <MessageSquare size={22} />
               </div>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-900">Direct WhatsApp Ordering</h4>
-                <p className="text-[11px] text-slate-500">Fast human confirmation & care</p>
+                <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide">WhatsApp Order Desk</h4>
+                <p className="text-[11px] text-emerald-200/60">Direct instant personal support</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-100">
-                <ShieldCheck size={20} />
+            <div className="flex items-center gap-4 p-3 rounded-2xl bg-white/[0.02] border border-white/5">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-300 flex items-center justify-center shrink-0 border border-amber-500/30">
+                <CheckCircle2 size={22} />
               </div>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-900">100% Quality Fabrics</h4>
-                <p className="text-[11px] text-slate-500">Fine silk, linen & combed cotton</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-slate-100 text-slate-800 flex items-center justify-center shrink-0 border border-slate-200">
-                <CheckCircle2 size={20} />
-              </div>
-              <div>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-900">7-Day Easy Exchange</h4>
-                <p className="text-[11px] text-slate-500">Hassle-free size replacement</p>
+                <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide">Guaranteed Fit</h4>
+                <p className="text-[11px] text-emerald-200/60">7-Day complimentary exchange</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 3. Category Showcase Grid */}
-        <section id="categories" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+        {/* 3. Society Boutique Categories */}
+        <section id="categories" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
             <div>
-              <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-widest bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-px bg-amber-400" />
+                <span className="text-xs font-bold text-amber-300 uppercase tracking-[0.25em] font-brand-title">
+                  Signature Wardrobe
+                </span>
+              </div>
+              <h2 className="font-serif-luxury text-3xl sm:text-5xl font-black text-white tracking-tight">
                 Curated Collections
-              </span>
-              <h2 className="font-serif-luxury text-2xl sm:text-4xl font-black text-slate-950 tracking-tight mt-2">
-                Explore by Outfit Collection
               </h2>
             </div>
             <Link
               href="/shop"
-              className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 transition-colors"
+              className="flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-wider py-2"
             >
-              <span>View All Outfits</span>
+              <span>Explore Entire Catalog</span>
               <ArrowRight size={15} />
             </Link>
           </div>
@@ -177,60 +230,64 @@ export default async function HomePage() {
               <Link
                 key={cat.id}
                 href={`/shop?category=${cat.slug}`}
-                className="group relative rounded-3xl overflow-hidden bg-white border border-stone-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
+                className="group relative rounded-3xl overflow-hidden bg-[#052018] border border-amber-500/20 shadow-lg hover:shadow-2xl hover:border-amber-400/60 hover:-translate-y-2 transition-all duration-500 flex flex-col"
               >
-                <div className="aspect-[4/5] w-full overflow-hidden bg-stone-100 relative">
+                <div className="aspect-[4/5] w-full overflow-hidden bg-[#041a13] relative">
                   {cat.image ? (
                     <img
                       src={cat.image}
                       alt={cat.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-stone-200 text-stone-400 text-xs font-bold">
+                    <div className="w-full h-full flex items-center justify-center bg-stone-900 text-stone-500 text-xs font-bold">
                       {cat.name}
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                  {/* Subtle Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#02140e] via-[#02140e]/30 to-transparent" />
                 </div>
 
                 <div className="absolute bottom-0 inset-x-0 p-4 text-white">
-                  <h3 className="font-serif-luxury font-bold text-sm sm:text-base leading-snug drop-shadow-xs">
+                  <h3 className="font-serif-luxury font-bold text-sm sm:text-base leading-snug drop-shadow-md text-amber-100 group-hover:text-amber-300 transition-colors">
                     {cat.name}
                   </h3>
-                  <p className="text-[11px] text-amber-300 font-semibold mt-0.5">
-                    {cat._count?.products || 0} Pieces Available
-                  </p>
+                  <div className="flex items-center justify-between mt-1 text-[11px] text-emerald-300 font-semibold">
+                    <span>{cat._count?.products || 0} Outfits</span>
+                    <ArrowRight size={13} className="text-amber-400 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all" />
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
         </section>
 
-        {/* 4. Featured Products Section */}
+        {/* 4. Featured Masterpieces Section */}
         {featuredProducts.length > 0 && (
-          <section className="bg-white py-16 sm:py-20 border-y border-stone-200/90">
+          <section className="bg-gradient-to-b from-[#052018] via-[#041a13] to-[#071712] py-20 sm:py-24 border-y border-amber-500/20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+              <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
                 <div>
-                  <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-widest flex items-center gap-1.5">
-                    <Star size={14} className="fill-amber-500 text-amber-500" />
-                    <span>Selected Creations</span>
-                  </span>
-                  <h2 className="font-serif-luxury text-2xl sm:text-4xl font-black text-slate-950 tracking-tight mt-2">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Flame size={15} className="text-amber-400" />
+                    <span className="text-xs font-bold text-amber-300 uppercase tracking-[0.25em] font-brand-title">
+                      Most Coveted
+                    </span>
+                  </div>
+                  <h2 className="font-serif-luxury text-3xl sm:text-5xl font-black text-white tracking-tight">
                     Featured Masterpieces
                   </h2>
                 </div>
                 <Link
                   href="/shop?filter=featured"
-                  className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 transition-colors"
+                  className="flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-wider"
                 >
-                  <span>See All Featured</span>
+                  <span>View All Featured</span>
                   <ArrowRight size={15} />
                 </Link>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-7">
                 {featuredProducts.map((prod) => {
                   const totalStock = prod.variants.reduce((s, v) => s + (v.stock || 0), 0);
                   const isOutOfStock = totalStock <= 0;
@@ -240,9 +297,9 @@ export default async function HomePage() {
                     <Link
                       key={prod.id}
                       href={`/product/${prod.slug}`}
-                      className="group bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-2xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
+                      className="group bg-[#041a13] rounded-3xl overflow-hidden border border-amber-500/20 shadow-md hover:shadow-2xl hover:border-amber-400/50 hover:-translate-y-2 transition-all duration-300 flex flex-col"
                     >
-                      <div className="aspect-[3/4] w-full overflow-hidden bg-stone-100 relative">
+                      <div className="aspect-[3/4] w-full overflow-hidden bg-stone-900 relative">
                         {prod.mainImage ? (
                           <img
                             src={prod.mainImage}
@@ -250,67 +307,78 @@ export default async function HomePage() {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-stone-400 text-xs">
+                          <div className="w-full h-full flex items-center justify-center text-stone-500 text-xs">
                             No Photo
                           </div>
                         )}
 
-                        {/* Badges */}
-                        <div className="absolute top-3 left-3 flex flex-col gap-1">
-                          {prod.isNewArrival && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-900 text-white shadow-xs">
-                              NEW
-                            </span>
-                          )}
+                        {/* Top Badges */}
+                        <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+                          <span className="px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-[10px] uppercase tracking-wider shadow-md">
+                            Featured
+                          </span>
                           {isOutOfStock && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-600 text-white shadow-xs">
-                              Sold Out
+                            <span className="px-2.5 py-1 rounded-full bg-rose-600/90 text-white font-bold text-[10px] uppercase tracking-wider backdrop-blur-xs">
+                              Out of Stock
                             </span>
                           )}
                         </div>
+
+                        {/* Category Tag Overlay */}
+                        {prod.category && (
+                          <div className="absolute bottom-3 left-3">
+                            <span className="px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-amber-200 text-[10px] font-medium border border-white/10">
+                              {prod.category.name}
+                            </span>
+                          </div>
+                        )}
                       </div>
 
-                      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                      {/* Product Details */}
+                      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
                         <div>
-                          <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">
-                            {prod.category?.name}
-                          </span>
-                          <h3 className="font-serif-luxury font-bold text-slate-900 text-sm sm:text-base mt-1 line-clamp-2 leading-snug group-hover:text-emerald-800 transition-colors">
+                          <h3 className="font-serif-luxury font-bold text-sm sm:text-base text-stone-100 group-hover:text-amber-300 transition-colors line-clamp-1">
                             {prod.name}
                           </h3>
-
-                          {/* Colour dots indicator on card */}
-                          {uniqueColours.length > 0 && (
-                            <div className="flex items-center gap-1.5 mt-2">
-                              {uniqueColours.map((code, idx) => (
-                                <span
-                                  key={idx}
-                                  className="w-3 h-3 rounded-full border border-black/20"
-                                  style={{ backgroundColor: code }}
-                                />
-                              ))}
-                              {prod.variants.length > 4 && (
-                                <span className="text-[10px] text-slate-400 font-semibold">
-                                  +{prod.variants.length - 4} shades
-                                </span>
-                              )}
-                            </div>
-                          )}
+                          <p className="text-[11px] text-emerald-200/60 line-clamp-1 mt-1 font-normal">
+                            SKU: {prod.sku}
+                          </p>
                         </div>
 
-                        <div className="pt-3 mt-3 border-t border-stone-100 flex items-baseline justify-between">
+                        {/* Palette preview */}
+                        {uniqueColours.length > 0 && (
+                          <div className="flex items-center gap-1.5">
+                            {uniqueColours.map((col, idx) => (
+                              <span
+                                key={idx}
+                                className="w-3.5 h-3.5 rounded-full border border-amber-500/40 shadow-xs"
+                                style={{ backgroundColor: col }}
+                              />
+                            ))}
+                            {prod.variants.length > 4 && (
+                              <span className="text-[10px] text-stone-400 font-bold ml-1">
+                                +{prod.variants.length - 4}
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Pricing & CTA */}
+                        <div className="pt-2 border-t border-white/5 flex items-center justify-between">
                           <div>
-                            <span className="text-base sm:text-lg font-black text-slate-900 font-serif-luxury">
+                            <span className="text-base sm:text-lg font-black text-amber-300">
                               {formatPrice(prod.sellingPrice, currencySymbol)}
                             </span>
                             {prod.originalPrice && prod.originalPrice > prod.sellingPrice && (
-                              <span className="text-xs text-slate-400 line-through ml-1.5">
+                              <span className="text-xs text-stone-500 line-through ml-2">
                                 {formatPrice(prod.originalPrice, currencySymbol)}
                               </span>
                             )}
                           </div>
-                          <span className="text-[11px] font-bold text-emerald-700 group-hover:underline">
-                            Select Size &rarr;
+
+                          <span className="text-[11px] font-bold text-slate-950 bg-amber-400 group-hover:bg-amber-300 px-3 py-1.5 rounded-xl transition-all shadow-md flex items-center gap-1">
+                            <span>View</span>
+                            <ArrowRight size={12} />
                           </span>
                         </div>
                       </div>
@@ -322,110 +390,175 @@ export default async function HomePage() {
           </section>
         )}
 
-        {/* 5. New Arrivals Section */}
+        {/* 5. New Arrivals Showcase */}
         {newArrivals.length > 0 && (
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
               <div>
-                <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-widest bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-                  Just Dropped
-                </span>
-                <h2 className="font-serif-luxury text-2xl sm:text-4xl font-black text-slate-950 tracking-tight mt-2">
-                  New Arrivals 2026
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles size={14} className="text-emerald-400" />
+                  <span className="text-xs font-bold text-emerald-400 uppercase tracking-[0.25em] font-brand-title">
+                    Fresh Off The Loom
+                  </span>
+                </div>
+                <h2 className="font-serif-luxury text-3xl sm:text-5xl font-black text-white tracking-tight">
+                  New Arrivals
                 </h2>
               </div>
               <Link
                 href="/shop?filter=new"
-                className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 transition-colors"
+                className="flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-wider"
               >
-                <span>View All New Arrivals</span>
+                <span>View All New Additions</span>
                 <ArrowRight size={15} />
               </Link>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-              {newArrivals.map((prod) => (
-                <Link
-                  key={prod.id}
-                  href={`/product/${prod.slug}`}
-                  className="group bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-2xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
-                >
-                  <div className="aspect-[3/4] w-full overflow-hidden bg-stone-100 relative">
-                    {prod.mainImage && (
-                      <img
-                        src={prod.mainImage}
-                        alt={prod.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    )}
-                  </div>
-                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                        {prod.category?.name}
-                      </span>
-                      <h3 className="font-serif-luxury font-bold text-slate-900 text-sm sm:text-base mt-1 line-clamp-2 leading-snug group-hover:text-emerald-800 transition-colors">
-                        {prod.name}
-                      </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-7">
+              {newArrivals.map((prod) => {
+                const totalStock = prod.variants.reduce((s, v) => s + (v.stock || 0), 0);
+                const isOutOfStock = totalStock <= 0;
+
+                return (
+                  <Link
+                    key={prod.id}
+                    href={`/product/${prod.slug}`}
+                    className="group bg-[#041a13] rounded-3xl overflow-hidden border border-amber-500/20 shadow-md hover:shadow-2xl hover:border-amber-400/50 hover:-translate-y-2 transition-all duration-300 flex flex-col"
+                  >
+                    <div className="aspect-[3/4] w-full overflow-hidden bg-stone-900 relative">
+                      {prod.mainImage ? (
+                        <img
+                          src={prod.mainImage}
+                          alt={prod.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-stone-500 text-xs">
+                          No Photo
+                        </div>
+                      )}
+
+                      <div className="absolute top-3 left-3">
+                        <span className="px-2.5 py-1 rounded-full bg-emerald-600/90 text-white font-black text-[10px] uppercase tracking-wider shadow-md backdrop-blur-xs">
+                          New
+                        </span>
+                      </div>
                     </div>
-                    <div className="pt-3 mt-3 border-t border-stone-100 flex items-baseline justify-between">
-                      <span className="text-base sm:text-lg font-black text-slate-900 font-serif-luxury">
-                        {formatPrice(prod.sellingPrice, currencySymbol)}
-                      </span>
-                      <span className="text-[11px] font-bold text-emerald-700 group-hover:underline">
-                        Order &rarr;
-                      </span>
+
+                    <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+                      <div>
+                        <h3 className="font-serif-luxury font-bold text-sm sm:text-base text-stone-100 group-hover:text-amber-300 transition-colors line-clamp-1">
+                          {prod.name}
+                        </h3>
+                        <p className="text-[11px] text-emerald-200/60 line-clamp-1 mt-1 font-normal">
+                          {prod.category?.name || 'Exclusive Outfit'}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                        <div>
+                          <span className="text-base sm:text-lg font-black text-amber-300">
+                            {formatPrice(prod.sellingPrice, currencySymbol)}
+                          </span>
+                        </div>
+
+                        <span className="text-[11px] font-bold text-slate-950 bg-amber-400 group-hover:bg-amber-300 px-3 py-1.5 rounded-xl transition-all shadow-md flex items-center gap-1">
+                          <span>Inspect</span>
+                          <ArrowRight size={12} />
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           </section>
         )}
 
-        {/* 6. Brand Story Section */}
-        <section id="about" className="bg-[#0B132B] text-white py-20 lg:py-24 border-t border-slate-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <span className="text-xs font-extrabold text-amber-400 uppercase tracking-widest">
-                Our Heritage & Craft
-              </span>
+        {/* 6. Instagram & Society Atelier Story Section */}
+        <section id="about" className="bg-[#02130e] text-white py-24 border-t border-amber-500/20 relative overflow-hidden">
+          {/* Subtle Glow */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 blur-[130px] rounded-full pointer-events-none" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="flex items-center gap-2">
+                <Crown size={15} className="text-amber-400" />
+                <span className="text-xs font-bold text-amber-400 uppercase tracking-[0.25em] font-brand-title">
+                  The Society Atelier
+                </span>
+              </div>
+
               <h2 className="font-serif-luxury text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-                {content?.brandStoryTitle || 'Authentic Craftsmanship & Modern Elegance'}
+                {content?.brandStoryTitle || 'Preserving Royal Heritage with Haute Couture Tailoring'}
               </h2>
-              <p className="text-sm sm:text-base text-stone-300 leading-relaxed font-normal">
+
+              <p className="text-sm sm:text-base text-emerald-100/80 leading-relaxed font-light">
                 {content?.brandStoryText ||
-                  `At ${settings?.businessName || 'AR Fashion House'}, we celebrate authentic craftsmanship, exquisite needlework, and modern precision tailoring. Every piece in our boutique is individually inspected for seam integrity and fabric longevity.`}
+                  `At ${settings?.businessName || 'The Premiums Society'}, every garment is born from a reverence for timeless regal needlework blended with modern bespoke silhouettes. Designed for celebrations, wedding soirees, and discerning everyday elegance.`}
               </p>
+
               <div className="pt-2 flex flex-wrap gap-4">
                 <Link
                   href="/shop"
-                  className="px-7 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-2xl text-xs transition-colors shadow-lg shadow-emerald-950/50"
+                  className="px-8 py-4 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black rounded-2xl text-xs transition-all shadow-xl shadow-amber-500/20 flex items-center gap-2"
                 >
-                  Shop the Boutique
+                  <ShoppingBag size={15} />
+                  <span>Shop The Boutique</span>
                 </Link>
-                <Link
-                  href="/policies/shipping-policy"
-                  className="px-6 py-3.5 border border-slate-700 text-slate-300 hover:text-white rounded-2xl text-xs transition-colors"
+
+                <a
+                  href={instaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-4 border border-pink-500/30 bg-pink-500/10 hover:bg-pink-500/20 text-pink-200 hover:text-white rounded-2xl text-xs transition-all flex items-center gap-2"
                 >
-                  Shipping & Coverage
-                </Link>
+                  <Instagram size={15} className="text-pink-400" />
+                  <span>Follow @the_premiumss</span>
+                </a>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="aspect-[4/3] rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900">
-                {content?.brandStoryImage ? (
-                  <img
-                    src={content.brandStoryImage}
-                    alt="Brand Heritage"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-slate-500 text-xs">
-                    {settings?.businessName || 'AR Fashion House'} Atelier
+            {/* Right Brand Showcase with Crown Motif */}
+            <div className="lg:col-span-5 relative flex justify-center">
+              <div className="w-full max-w-md rounded-3xl overflow-hidden border border-amber-500/30 bg-[#052219] p-8 shadow-2xl relative">
+                <div className="absolute top-0 right-0 p-4">
+                  <Crown size={24} className="text-amber-400/40" />
+                </div>
+                <div className="flex flex-col items-center text-center space-y-4">
+                  <div className="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-amber-400 to-emerald-400 shadow-xl">
+                    <img
+                      src="/images/logo.png"
+                      alt="The Premiums Society Logo"
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </div>
-                )}
+                  <div>
+                    <h3 className="font-serif-luxury text-2xl font-bold text-white tracking-wide">
+                      The Premiums Society
+                    </h3>
+                    <p className="text-xs text-amber-300 font-semibold tracking-widest uppercase mt-1">
+                      Couture & Festive Boutique
+                    </p>
+                  </div>
+                  <p className="text-xs text-stone-300 leading-relaxed font-normal">
+                    Experience luxury ethnic craftsmanship. Directly connected with our personal styling desk via WhatsApp.
+                  </p>
+                  <div className="w-full pt-4 border-t border-white/10 flex items-center justify-between text-xs text-stone-300">
+                    <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
+                      <Phone size={13} />
+                      <span>{waPhone}</span>
+                    </span>
+                    <a
+                      href={`https://wa.me/${cleanPhone}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-amber-400 font-bold hover:underline"
+                    >
+                      Chat Now &rarr;
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

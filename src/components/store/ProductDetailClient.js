@@ -145,7 +145,7 @@ export default function ProductDetailClient({ product, settings }) {
   };
 
   const currencySymbol = settings?.currencySymbol || '₹';
-  const waPhone = settings?.primaryPhone || '+917304396709';
+  const waPhone = settings?.primaryPhone || '+919920517851';
   const cleanPhone = waPhone.replace(/[^0-9]/g, '');
 
   return (
@@ -417,7 +417,7 @@ export default function ProductDetailClient({ product, settings }) {
           {/* Quick WhatsApp Inquiry for this outfit */}
           <a
             href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(
-              `Hello AR Fashion House, I want to inquire about "${product.name}" in Colour: ${selectedColour}, Size: ${activeVariant?.size || 'Standard'}.`
+              `Hello The Premiums Society, I want to inquire about "${product.name}" in Colour: ${selectedColour}, Size: ${activeVariant?.size || 'Standard'}.`
             )}`}
             target="_blank"
             rel="noopener noreferrer"

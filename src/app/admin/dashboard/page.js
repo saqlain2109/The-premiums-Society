@@ -119,7 +119,7 @@ export default function AdminDashboardPage() {
         <div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">Store Dashboard</h1>
           <p className="text-xs text-slate-500">
-            Real-time operational summary & live database statistics for AR Fashion House.
+            Real-time operational summary & live database statistics for The Premiums Society.
           </p>
         </div>
 

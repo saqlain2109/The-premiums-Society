@@ -246,24 +246,24 @@ export default function AdminSettingsPage() {
               <input
                 type="text"
                 required
-                placeholder="+917304396709"
+                placeholder="+919920517851"
                 value={settings.primaryPhone || ''}
                 onChange={(e) => setSettings({ ...settings, primaryPhone: e.target.value })}
                 className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono font-bold"
               />
-              <p className="text-[10px] text-slate-400">Include country code (e.g. +91 7304396709)</p>
+              <p className="text-[10px] text-slate-400">Include country code (e.g. +91 9920517851)</p>
             </div>
 
             <div className="space-y-1">
               <label className="font-bold text-slate-700">Secondary WhatsApp Number</label>
               <input
                 type="text"
-                placeholder="+918080010107"
+                placeholder="+919920517851"
                 value={settings.secondaryPhone || ''}
                 onChange={(e) => setSettings({ ...settings, secondaryPhone: e.target.value })}
                 className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono font-bold"
               />
-              <p className="text-[10px] text-slate-400">Backup recipient line (e.g. +91 8080010107)</p>
+              <p className="text-[10px] text-slate-400">Backup recipient line (e.g. +91 9920517851)</p>
             </div>
 
             <div className="space-y-1">

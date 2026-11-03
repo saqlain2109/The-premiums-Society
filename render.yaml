@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ar-fashion-house
+    name: the-premiums-society
     runtime: node
     plan: free
     region: singapore # or oregon, frankfurt
@@ -12,4 +12,4 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: DATABASE_URL
-        value: file:./prisma/ar_fashion.db
+        value: file:./prisma/the_premiums.db

@@ -235,7 +235,7 @@ export default function AdminProductsPage() {
         <div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">Products Management</h1>
           <p className="text-xs text-slate-500">
-            Create, edit, duplicate, and toggle publications across AR Fashion House catalog.
+            Create, edit, duplicate, and toggle publications across The Premiums Society catalog.
           </p>
         </div>
 

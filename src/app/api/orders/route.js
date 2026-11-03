@@ -76,7 +76,7 @@ export async function POST(req) {
     const settings = await prisma.storeSettings.findUnique({ where: { id: 'default' } });
     const targetPhone = (settings?.defaultRecipient === 'secondary' && settings?.secondaryPhone)
       ? settings.secondaryPhone
-      : (settings?.primaryPhone || '+917304396709');
+      : (settings?.primaryPhone || '+919920517851');
 
     // Clean target WhatsApp number (digits only for wa.me URL)
     const cleanPhoneDigits = targetPhone.replace(/[^0-9]/g, '');
@@ -169,7 +169,7 @@ export async function POST(req) {
     const currencySym = settings?.currencySymbol || '₹';
 
     // Format professional WhatsApp direct order message
-    let waMessage = `*NEW ORDER - AR FASHION HOUSE*\n`;
+    let waMessage = `*NEW ORDER - THE PREMIUMS SOCIETY*\n`;
     waMessage += `==========================\n`;
     waMessage += `*Order ID:* ${result.order.orderNumber}\n`;
     waMessage += `*Date:* ${new Date().toLocaleDateString('en-GB')}\n\n`;

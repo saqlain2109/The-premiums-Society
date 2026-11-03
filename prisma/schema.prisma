@@ -1,6 +1,6 @@
 datasource db {
   provider = "sqlite"
-  url      = "file:./ar_fashion.db"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -114,12 +114,12 @@ model OrderItem {
 
 model StoreSettings {
   id                    String   @id @default("default")
-  businessName          String   @default("AR Fashion House")
-  storeLogo             String?
-  primaryPhone          String   @default("+917304396709")
-  secondaryPhone        String?  @default("+918080010107")
+  businessName          String   @default("The Premiums Society")
+  storeLogo             String?  @default("/images/logo.png")
+  primaryPhone          String   @default("+919920517851")
+  secondaryPhone        String?  @default("+919920517851")
   defaultRecipient      String   @default("primary")
-  businessEmail         String   @default("contact@arfashionhouse.com")
+  businessEmail         String   @default("contact@thepremiums.in")
   shippingCharge        Float    @default(100)
   freeShippingThreshold Float?   @default(2000)
   currency              String   @default("INR")
@@ -127,15 +127,15 @@ model StoreSettings {
   storeAnnouncement     String?  @default("Special Festive Offer: FREE Delivery on orders over ₹2000 across India!")
   announcementActive    Boolean  @default(true)
   facebookUrl           String?
-  instagramUrl          String?
-  whatsappUrl           String?  @default("https://wa.me/917304396709")
+  instagramUrl          String?  @default("https://www.instagram.com/the_premiumss?xtok=MXBtOTNoc2tiM3RxMg==")
+  whatsappUrl           String?  @default("https://wa.me/919920517851")
   address               String?
   updatedAt             DateTime @updatedAt
 }
 
 model WebsiteContent {
   id                  String   @id @default("default")
-  heroHeading         String   @default("Elevate Your Style with AR Fashion")
+  heroHeading         String   @default("The Premiums Society — Timeless Luxury & Elegance")
   heroSubheading      String   @default("Discover the latest hand-crafted traditional & contemporary clothing collection tailored for perfection.")
   heroImage           String?  @default("/uploads/hero-fashion.jpg")
   heroPrimaryBtnText  String   @default("Shop New Arrivals")
@@ -144,7 +144,7 @@ model WebsiteContent {
   heroSecondaryBtnLink String  @default("/#categories")
   announcementBar     String?  @default("✨ Special Festive Offer: FREE Delivery on orders over ₹2000 across India!")
   brandStoryTitle     String   @default("Authentic Craftsmanship & Modern Elegance")
-  brandStoryText      String   @default("At AR Fashion House, we blend heritage needlework with contemporary silhouettes. From everyday comfort to bespoke celebratory attire, every stitch represents premium craftsmanship, finest organic fabrics, and unmatched attention to detail.")
+  brandStoryText      String   @default("At The Premiums Society, we blend heritage needlework with contemporary silhouettes. From everyday comfort to bespoke celebratory attire, every stitch represents premium craftsmanship, finest organic fabrics, and unmatched attention to detail.")
   brandStoryImage     String?  @default("/uploads/brand-story.jpg")
   updatedAt           DateTime @updatedAt
 }

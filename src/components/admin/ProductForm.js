@@ -216,7 +216,7 @@ export default function ProductForm({ initialData = null, isEdit = false }) {
             <p className="text-xs text-slate-500">
               {isEdit
                 ? `Updating details for "${initialData?.name}" (${initialData?.sku})`
-                : 'Publish or draft a new clothing piece to AR Fashion House storefront.'}
+                : 'Publish or draft a new clothing piece to The Premiums Society storefront.'}
             </p>
           </div>
         </div>

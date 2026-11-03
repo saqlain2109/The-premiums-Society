@@ -4,8 +4,8 @@ import { prisma } from '@/lib/prisma';
 import AdminLayoutClient from '@/components/admin/AdminLayoutClient';
 
 export const metadata = {
-  title: 'Admin Dashboard | AR Fashion House',
-  description: 'Enterprise Store Management Portal for AR Fashion House',
+  title: 'Admin Dashboard | The Premiums Society',
+  description: 'Enterprise Store Management Portal for The Premiums Society',
 };
 
 export const dynamic = 'force-dynamic';
