@@ -15,6 +15,7 @@ import {
   Share2,
   MapPin,
   Megaphone,
+  Navigation,
 } from 'lucide-react';
 
 export default function AdminSettingsPage() {
@@ -51,27 +52,25 @@ export default function AdminSettingsPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setUploadingLogo(true);
-    const body = new FormData();
-    body.append('files', file);
-
     try {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('ar_admin_token') : null;
-      const headers = {};
-      if (token) headers['Authorization'] = `Bearer ${token}`;
+      setUploadingLogo(true);
+      const formData = new FormData();
+      formData.append('file', file);
 
       const res = await fetch('/api/upload', {
         method: 'POST',
-        headers,
-        credentials: 'include',
-        body,
+        body: formData,
       });
       const data = await res.json();
-      if (!res.ok || !data.success) throw new Error(data.error || 'Upload failed');
-      setSettings((prev) => ({ ...prev, storeLogo: data.urls[0] }));
-      showToast('Logo uploaded!');
+      if (data.success && data.url) {
+        setSettings((prev) => ({ ...prev, storeLogo: data.url }));
+        showToast('Logo uploaded! Click "Save" below to apply changes.');
+      } else {
+        alert(data.error || 'Failed to upload logo');
+      }
     } catch (err) {
-      setErrorMessage(err.message || 'Logo upload failed');
+      console.error(err);
+      alert('Error uploading file');
     } finally {
       setUploadingLogo(false);
     }
@@ -83,31 +82,22 @@ export default function AdminSettingsPage() {
     setErrorMessage('');
 
     try {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('ar_admin_token') : null;
-      const headers = { 'Content-Type': 'application/json' };
-      if (token) headers['Authorization'] = `Bearer ${token}`;
-
       const res = await fetch('/api/settings', {
         method: 'PUT',
-        headers,
-        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings),
       });
 
       const data = await res.json();
-      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to save settings');
-
-      setSettings(data.settings);
-      if (typeof window !== 'undefined') {
-        const sym = data.settings.currencySymbol || '₹';
-        window.__STORE_CURRENCY_SYMBOL__ = sym;
-        localStorage.setItem('ar_currency_symbol', sym);
-        localStorage.setItem('ar_currency_code', data.settings.currency || 'INR');
-        window.dispatchEvent(new CustomEvent('store_settings_updated', { detail: data.settings }));
+      if (data.success) {
+        setSettings(data.settings);
+        showToast('Store settings & map coordinates saved successfully!');
+      } else {
+        setErrorMessage(data.error || 'Failed to save settings');
       }
-      showToast(`Settings saved! Currency updated to ${data.settings.currencySymbol || '₹'} (${data.settings.currency || 'INR'})`);
     } catch (err) {
-      setErrorMessage(err.message || 'Error saving settings');
+      console.error(err);
+      setErrorMessage('Network error while saving settings');
     } finally {
       setSaving(false);
     }
@@ -115,279 +105,199 @@ export default function AdminSettingsPage() {
 
   if (loading) {
     return (
-      <div className="py-24 text-center">
-        <Loader2 size={32} className="animate-spin text-emerald-600 mx-auto mb-2" />
-        <p className="text-xs text-slate-500 font-semibold">Loading settings...</p>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-slate-500">
+        <Loader2 size={36} className="animate-spin text-emerald-600 mb-2" />
+        <p className="text-xs font-semibold">Loading Store Configuration...</p>
+      </div>
+    );
+  }
+
+  if (!settings) {
+    return (
+      <div className="p-8 bg-white rounded-2xl border border-slate-200 text-center">
+        <AlertCircle size={36} className="text-rose-500 mx-auto mb-2" />
+        <h3 className="font-bold text-slate-800">Unable to Load Settings</h3>
+        <p className="text-xs text-slate-500 mt-1">Please refresh the page to retry.</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-16">
-      {/* Toast */}
+    <div className="space-y-6 max-w-4xl pb-16">
+      {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-xs font-bold animate-in fade-in slide-in-from-bottom-4">
-          <CheckCircle size={16} className="text-emerald-400" />
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold border border-slate-800 animate-in slide-in-from-bottom duration-200">
+          <CheckCircle size={16} className="text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
 
+      {errorMessage && (
+        <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 rounded-2xl text-xs flex items-center gap-2">
+          <AlertCircle size={16} />
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Store Settings</h1>
-          <p className="text-xs text-slate-500">
-            Configure contact information, WhatsApp recipients, delivery charges, and store policies.
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight font-serif-luxury">
+            Store & Location Settings
+          </h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Configure boutique identity, contact helplines, GPS coordinates, interactive map & social media.
           </p>
         </div>
 
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-extrabold shadow-md shadow-emerald-700/20 transition-all disabled:opacity-50"
+          className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-700/20 disabled:opacity-50"
         >
           {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}
-          <span>Save Settings</span>
+          <span>{saving ? 'Saving Changes...' : 'Save Settings'}</span>
         </button>
       </div>
 
-      {errorMessage && (
-        <div className="p-4 bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold rounded-2xl flex items-center gap-2">
-          <AlertCircle size={16} className="text-rose-600" />
-          <span>{errorMessage}</span>
-        </div>
-      )}
-
       <form onSubmit={handleSave} className="space-y-6 text-xs">
-        {/* 1. General & Brand */}
+        {/* 1. Identity & Logo */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
           <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
             <Building size={18} className="text-emerald-600" />
-            <span>Store Identity & Logo</span>
+            <span>Storefront Brand & Logo</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="font-bold text-slate-700">Business Name</label>
+              <label className="font-bold text-slate-700">Business Display Name</label>
               <input
                 type="text"
                 required
                 value={settings.businessName || ''}
                 onChange={(e) => setSettings({ ...settings, businessName: e.target.value })}
-                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold text-sm"
+                placeholder="The Premiums Society"
+                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-semibold"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-700">Business Support Email</label>
+              <label className="font-bold text-slate-700">Business Email</label>
               <input
                 type="email"
                 required
                 value={settings.businessEmail || ''}
                 onChange={(e) => setSettings({ ...settings, businessEmail: e.target.value })}
-                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium"
+                placeholder="contact@thepremiums.in"
+                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl"
               />
             </div>
+          </div>
 
-            {/* Store Logo */}
-            <div className="md:col-span-2 space-y-2 pt-2">
-              <label className="font-bold text-slate-700 block">Store Logo</label>
-              <div className="flex items-center gap-4">
-                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 relative group">
-                  {settings.storeLogo ? (
-                    <>
-                      <img src={settings.storeLogo} alt="Logo" className="w-full h-full object-contain p-2" />
-                      <button
-                        type="button"
-                        onClick={() => setSettings((prev) => ({ ...prev, storeLogo: null }))}
-                        className="absolute inset-0 bg-black/60 text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-                      >
-                        Remove
-                      </button>
-                    </>
-                  ) : (
-                    <span className="text-[10px] text-slate-400 font-bold">No Logo</span>
-                  )}
-                </div>
-                <div className="flex-1 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <label className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold cursor-pointer transition-colors text-xs">
-                      <Upload size={14} />
-                      <span>{uploadingLogo ? 'Uploading...' : 'Upload Logo File'}</span>
-                      <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
-                    </label>
-                    {settings.storeLogo && (
-                      <span className="text-[11px] text-emerald-600 font-semibold">Custom logo active</span>
-                    )}
-                  </div>
-                  <input
-                    type="url"
-                    placeholder="Or enter logo URL (e.g. https://... or /uploads/...)..."
-                    value={settings.storeLogo || ''}
-                    onChange={(e) => setSettings({ ...settings, storeLogo: e.target.value })}
-                    className="w-full p-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono"
-                  />
-                </div>
+          {/* Logo upload */}
+          <div className="pt-2 border-t border-slate-100 flex items-center gap-4">
+            <div className="w-16 h-16 rounded-full border border-slate-200 overflow-hidden bg-slate-50 flex items-center justify-center shrink-0">
+              {settings.storeLogo ? (
+                <img src={settings.storeLogo} alt="Logo Preview" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-[10px] text-slate-400 font-bold">No Logo</span>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <label className="font-bold text-slate-700 block">Brand Logo</label>
+              <div className="flex items-center gap-2">
+                <label className="cursor-pointer px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold flex items-center gap-1.5 transition-colors">
+                  <Upload size={13} />
+                  <span>{uploadingLogo ? 'Uploading...' : 'Upload Logo'}</span>
+                  <input type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} disabled={uploadingLogo} />
+                </label>
+                {settings.storeLogo && (
+                  <button
+                    type="button"
+                    onClick={() => setSettings({ ...settings, storeLogo: null })}
+                    className="text-xs text-rose-600 hover:underline font-semibold"
+                  >
+                    Remove
+                  </button>
+                )}
               </div>
             </div>
           </div>
         </div>
 
-        {/* 2. WhatsApp Numbers & Recipient Routing */}
+        {/* 2. Contact Phone & WhatsApp */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
           <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
             <Phone size={18} className="text-emerald-600" />
-            <span>WhatsApp Order Routing</span>
+            <span>Contact & WhatsApp Helplines</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="font-bold text-slate-700">Primary WhatsApp Number *</label>
+              <label className="font-bold text-slate-700">Primary Phone / WhatsApp</label>
               <input
                 type="text"
                 required
-                placeholder="+919920517851"
                 value={settings.primaryPhone || ''}
                 onChange={(e) => setSettings({ ...settings, primaryPhone: e.target.value })}
+                placeholder="+919920517851"
                 className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono font-bold"
               />
-              <p className="text-[10px] text-slate-400">Include country code (e.g. +91 9920517851)</p>
+              <p className="text-[10px] text-slate-400">Include country code (e.g. +91 99205 17851)</p>
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-700">Secondary WhatsApp Number</label>
+              <label className="font-bold text-slate-700">Secondary Helpline (Optional)</label>
               <input
                 type="text"
-                placeholder="+919920517851"
                 value={settings.secondaryPhone || ''}
                 onChange={(e) => setSettings({ ...settings, secondaryPhone: e.target.value })}
-                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono font-bold"
+                placeholder="+91..."
+                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono font-medium"
               />
-              <p className="text-[10px] text-slate-400">Backup recipient line (e.g. +91 9920517851)</p>
-            </div>
-
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700">Default WhatsApp Recipient</label>
-              <select
-                value={settings.defaultRecipient || 'primary'}
-                onChange={(e) => setSettings({ ...settings, defaultRecipient: e.target.value })}
-                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-semibold"
-              >
-                <option value="primary">Primary WhatsApp Number</option>
-                <option value="secondary">Secondary WhatsApp Number</option>
-              </select>
-              <p className="text-[10px] text-slate-400">Where customer checkout chats open</p>
             </div>
           </div>
         </div>
 
-        {/* 3. Currency & Delivery Fees */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-5">
+        {/* 3. Shipping & Currencies */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
           <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
             <Truck size={18} className="text-emerald-600" />
-            <span>Shipping & Currency Settings</span>
+            <span>Shipping Policy & Pricing Configuration</span>
           </h2>
 
-          {/* Quick Currency Selector Presets */}
-          <div className="space-y-2 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-            <label className="font-bold text-slate-700 block text-xs">
-              Quick Currency Presets (Click to switch store currency)
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {[
-                { code: 'INR', symbol: '₹', label: '₹ INR (Indian Rupee)' },
-                { code: 'USD', symbol: '$', label: '$ USD (US Dollar)' },
-                { code: 'AED', symbol: 'AED ', label: 'AED (UAE Dirham)' },
-                { code: 'GBP', symbol: '£', label: '£ GBP (British Pound)' },
-                { code: 'EUR', symbol: '€', label: '€ EUR (Euro)' },
-                { code: 'CAD', symbol: 'C$', label: 'C$ CAD (Canadian Dollar)' },
-                { code: 'AUD', symbol: 'A$', label: 'A$ AUD (Australian Dollar)' },
-              ].map((preset) => {
-                const isSelected =
-                  settings?.currency === preset.code && settings?.currencySymbol === preset.symbol;
-                return (
-                  <button
-                    key={preset.code}
-                    type="button"
-                    onClick={() => {
-                      setSettings({
-                        ...settings,
-                        currency: preset.code,
-                        currencySymbol: preset.symbol,
-                      });
-                      showToast(`Switched currency to ${preset.symbol} (${preset.code}) - Click "Save Settings" to apply!`);
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
-                      isSelected
-                        ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                        : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
-                    }`}
-                  >
-                    {preset.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="font-bold text-slate-700">Currency Code</label>
+              <label className="font-bold text-slate-700">Standard Delivery Charge (₹)</label>
               <input
-                type="text"
-                value={settings?.currency ?? ''}
-                onChange={(e) => setSettings({ ...settings, currency: e.target.value })}
-                placeholder="e.g. INR, BDT, USD"
-                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold font-mono"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700">Currency Symbol</label>
-              <input
-                type="text"
-                value={settings?.currencySymbol ?? ''}
-                onChange={(e) => setSettings({ ...settings, currencySymbol: e.target.value })}
-                placeholder="e.g. ₹, $, AED, £"
+                type="number"
+                min="0"
+                value={settings.shippingCharge}
+                onChange={(e) => setSettings({ ...settings, shippingCharge: e.target.value })}
                 className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-700">
-                Standard Delivery Fee ({settings?.currencySymbol || '₹'})
-              </label>
+              <label className="font-bold text-slate-700">Free Shipping Order Threshold (₹)</label>
               <input
                 type="number"
                 min="0"
-                value={settings?.shippingCharge ?? 100}
-                onChange={(e) => setSettings({ ...settings, shippingCharge: parseFloat(e.target.value) || 0 })}
-                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700">
-                Free Shipping Threshold ({settings?.currencySymbol || '₹'})
-              </label>
-              <input
-                type="number"
-                min="0"
-                value={settings?.freeShippingThreshold ?? 2000}
-                onChange={(e) =>
-                  setSettings({ ...settings, freeShippingThreshold: parseFloat(e.target.value) || 0 })
-                }
+                value={settings.freeShippingThreshold || ''}
+                onChange={(e) => setSettings({ ...settings, freeShippingThreshold: e.target.value })}
+                placeholder="2000"
                 className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold"
               />
             </div>
           </div>
         </div>
 
-        {/* 4. Store Announcement & Physical Address */}
+        {/* 4. Footer Physical Address & Store Announcement */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
           <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
             <Megaphone size={18} className="text-emerald-600" />
-            <span>Store Announcement & Address</span>
+            <span>Store Announcement & Footer Address</span>
           </h2>
 
           <div className="space-y-3">
@@ -414,19 +324,86 @@ export default function AdminSettingsPage() {
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-700">Physical Store Address & Location</label>
+              <label className="font-bold text-slate-700">Footer Physical Address Text</label>
               <textarea
                 rows={2}
                 value={settings.address || ''}
                 onChange={(e) => setSettings({ ...settings, address: e.target.value })}
-                placeholder="Outlet / Head office address..."
+                placeholder="Shop No. / Building / Street address shown in the footer..."
                 className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl"
               />
+              <p className="text-[10px] text-slate-400">This address text is displayed cleanly in the website footer.</p>
             </div>
           </div>
         </div>
 
-        {/* 5. Social Media Links */}
+        {/* 5. DEDICATED GPS COORDINATES & INTERACTIVE GOOGLE MAP */}
+        <div className="bg-white rounded-2xl border-2 border-emerald-500/30 p-6 shadow-sm space-y-4">
+          <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <Navigation size={18} className="text-emerald-600" />
+              <span>Boutique GPS Coordinates & Google Map Setup</span>
+            </h2>
+            <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              Interactive Store Map
+            </span>
+          </div>
+
+          <p className="text-xs text-slate-500 leading-relaxed">
+            Enter the exact GPS coordinates for your boutique. Customers will see your shop directly on the embedded Google Map and can tap <strong>"Get Driving Directions"</strong> on their phone to navigate to your physical boutique!
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+            <div className="space-y-1.5">
+              <label className="font-bold text-slate-700 text-xs flex items-center gap-1.5">
+                <span>Latitude</span>
+                <span className="text-slate-400 font-normal">(e.g. 19.0760)</span>
+              </label>
+              <input
+                type="number"
+                step="any"
+                value={settings.latitude !== null && settings.latitude !== undefined ? settings.latitude : ''}
+                onChange={(e) => setSettings({ ...settings, latitude: e.target.value })}
+                placeholder="19.0760"
+                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="font-bold text-slate-700 text-xs flex items-center gap-1.5">
+                <span>Longitude</span>
+                <span className="text-slate-400 font-normal">(e.g. 72.8777)</span>
+              </label>
+              <input
+                type="number"
+                step="any"
+                value={settings.longitude !== null && settings.longitude !== undefined ? settings.longitude : ''}
+                onChange={(e) => setSettings({ ...settings, longitude: e.target.value })}
+                placeholder="72.8777"
+                className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5 pt-2">
+            <label className="font-bold text-slate-700 text-xs flex items-center gap-1.5">
+              <span>Google Maps Link or Direction URL</span>
+              <span className="text-slate-400 font-normal">(Optional Custom Link)</span>
+            </label>
+            <input
+              type="text"
+              value={settings.mapEmbedUrl || ''}
+              onChange={(e) => setSettings({ ...settings, mapEmbedUrl: e.target.value })}
+              placeholder="https://maps.app.goo.gl/... or https://maps.google.com/?q=..."
+              className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium focus:bg-white focus:ring-2 focus:ring-emerald-500"
+            />
+            <p className="text-[10px] text-slate-400">
+              Tip: Open Google Maps, search your boutique, click <strong>Share</strong>, and paste the link here.
+            </p>
+          </div>
+        </div>
+
+        {/* 6. Social Media Links */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
           <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
             <Share2 size={18} className="text-emerald-600" />
