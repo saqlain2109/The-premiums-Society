@@ -90,9 +90,9 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
       <AdminSidebar userRole={currentUser.role || 'ADMIN'} categoryCount={categoryCount} />
 
       {/* Main Area Offset by Sidebar */}
-      <div className="flex-1 flex flex-col min-w-0 pl-20 lg:pl-64 transition-all duration-300">
+      <div className="flex-1 flex flex-col min-w-0 pl-16 sm:pl-20 lg:pl-64 transition-all duration-300">
         {/* Topbar */}
-        <header className="h-16 bg-white border-b border-slate-200/90 px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-16 bg-white border-b border-slate-200/90 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
               <ShieldCheck size={20} className="text-emerald-600" />
@@ -133,7 +133,7 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
           {children}
         </main>
       </div>

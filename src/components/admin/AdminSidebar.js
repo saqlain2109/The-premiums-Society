@@ -81,9 +81,7 @@ export default function AdminSidebar({ userRole = 'ADMIN', categoryCount = 0 }) 
       <div className="flex items-center justify-between h-16 px-4 border-b border-[#1E293B] bg-[#0B132B]">
         {!collapsed && (
           <Link href="/admin/dashboard" className="flex items-center gap-2 overflow-hidden">
-            <div className="w-9 h-9 rounded-lg bg-emerald-600 flex items-center justify-center font-bold text-white shadow-md shadow-emerald-900/40">
-              AR
-            </div>
+            <img src="/images/logo.png" alt="Logo" className="w-9 h-9 rounded-full object-cover border border-amber-500/40 shadow-md shrink-0" />
             <div className="truncate">
               <span className="font-bold text-white tracking-wide text-sm block">THE PREMIUMS</span>
               <span className="text-[10px] text-emerald-400 uppercase tracking-wider font-semibold">Admin Portal</span>
@@ -91,9 +89,7 @@ export default function AdminSidebar({ userRole = 'ADMIN', categoryCount = 0 }) 
           </Link>
         )}
         {collapsed && (
-          <div className="mx-auto w-9 h-9 rounded-lg bg-emerald-600 flex items-center justify-center font-bold text-white">
-            AR
-          </div>
+          <img src="/images/logo.png" alt="Logo" className="mx-auto w-9 h-9 rounded-full object-cover border border-amber-500/40 shrink-0" />
         )}
 
         {/* Collapse Toggle Button */}
