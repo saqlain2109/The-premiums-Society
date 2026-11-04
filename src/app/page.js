@@ -582,7 +582,7 @@ export default async function HomePage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Sparkles size={14} className="text-amber-400 shrink-0" />
-                      <span>Store Hours: 11:00 AM - 9:30 PM (All Days Open)</span>
+                      <span>Store Hours: {settings?.storeHours || "11:00 AM - 9:30 PM (All Days Open)"}</span>
                     </div>
                   </div>
                 </div>

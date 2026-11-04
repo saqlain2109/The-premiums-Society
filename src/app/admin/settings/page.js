@@ -401,6 +401,23 @@ export default function AdminSettingsPage() {
               Tip: Open Google Maps, search your boutique, click <strong>Share</strong>, and paste the link here.
             </p>
           </div>
+
+          <div className="space-y-1.5 pt-2 border-t border-slate-100">
+            <label className="font-bold text-slate-700 text-xs flex items-center gap-1.5">
+              <span>Boutique Operating Hours & Days</span>
+              <span className="text-slate-400 font-normal">(Shown on Store Map & Customer Facing Section)</span>
+            </label>
+            <input
+              type="text"
+              value={settings.storeHours || ''}
+              onChange={(e) => setSettings({ ...settings, storeHours: e.target.value })}
+              placeholder="e.g. 11:00 AM - 9:30 PM (All Days Open)"
+              className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold focus:bg-white focus:ring-2 focus:ring-emerald-500"
+            />
+            <p className="text-[10px] text-slate-400">
+              Customers will see this exact store timing on the website's location section.
+            </p>
+          </div>
         </div>
 
         {/* 6. Social Media Links */}

@@ -89,6 +89,7 @@ export async function PUT(req) {
         latitude: parsedLat,
         longitude: parsedLng,
         mapEmbedUrl: mapEmbedUrl !== undefined ? mapEmbedUrl : null,
+        storeHours: storeHours !== undefined ? storeHours : '11:00 AM - 9:30 PM (All Days Open)',
       },
       create: {
         id: 'default',
@@ -111,6 +112,7 @@ export async function PUT(req) {
         latitude: parsedLat,
         longitude: parsedLng,
         mapEmbedUrl: mapEmbedUrl || null,
+        storeHours: storeHours || '11:00 AM - 9:30 PM (All Days Open)',
       },
     });
 

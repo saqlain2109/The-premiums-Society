@@ -133,6 +133,7 @@ model StoreSettings {
   latitude              Float?
   longitude             Float?
   mapEmbedUrl           String?
+  storeHours            String?  @default("11:00 AM - 9:30 PM (All Days Open)")
   updatedAt             DateTime @updatedAt
 }
 
