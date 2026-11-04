@@ -275,7 +275,7 @@ export default async function HomePage() {
                 </Link>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-7">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
                 {featuredProducts.map((prod) => {
                   const totalStock = prod.variants.reduce((s, v) => s + (v.stock || 0), 0);
                   const isOutOfStock = totalStock <= 0;
@@ -320,7 +320,7 @@ export default async function HomePage() {
                         )}
                       </div>
 
-                      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+                      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2">
                         <div>
                           <h3 className="font-serif-luxury font-bold text-sm sm:text-base text-stone-100 group-hover:text-amber-300 transition-colors line-clamp-1">
                             {prod.name}
@@ -347,21 +347,21 @@ export default async function HomePage() {
                           </div>
                         )}
 
-                        <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-                          <div>
-                            <span className="text-base sm:text-lg font-black text-amber-300">
+                        <div className="pt-2 border-t border-white/5 flex flex-wrap items-center justify-between gap-1.5">
+                          <div className="flex items-baseline flex-wrap gap-1">
+                            <span className="text-sm sm:text-base lg:text-lg font-black text-amber-300">
                               {formatPrice(prod.sellingPrice, currencySymbol)}
                             </span>
                             {prod.originalPrice && prod.originalPrice > prod.sellingPrice && (
-                              <span className="text-xs text-stone-500 line-through ml-2">
+                              <span className="text-[10px] sm:text-xs text-stone-500 line-through">
                                 {formatPrice(prod.originalPrice, currencySymbol)}
                               </span>
                             )}
                           </div>
 
-                          <span className="text-[11px] font-bold text-slate-950 bg-amber-400 group-hover:bg-amber-300 px-3 py-1.5 rounded-xl transition-all shadow-md flex items-center gap-1">
+                          <span className="text-[10px] sm:text-[11px] font-bold text-slate-950 bg-amber-400 group-hover:bg-amber-300 px-2 sm:px-2.5 py-1 rounded-lg transition-all shadow-md flex items-center gap-1 shrink-0">
                             <span>View</span>
-                            <ArrowRight size={12} />
+                            <ArrowRight size={11} />
                           </span>
                         </div>
                       </div>
@@ -397,7 +397,7 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-7">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
               {newArrivals.map((prod) => {
                 return (
                   <Link
@@ -425,7 +425,7 @@ export default async function HomePage() {
                       </div>
                     </div>
 
-                    <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+                    <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2">
                       <div>
                         <h3 className="font-serif-luxury font-bold text-sm sm:text-base text-stone-100 group-hover:text-amber-300 transition-colors line-clamp-1">
                           {prod.name}
@@ -435,16 +435,16 @@ export default async function HomePage() {
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                      <div className="pt-2 border-t border-white/5 flex flex-wrap items-center justify-between gap-1.5">
                         <div>
-                          <span className="text-base sm:text-lg font-black text-amber-300">
+                          <span className="text-sm sm:text-base lg:text-lg font-black text-amber-300">
                             {formatPrice(prod.sellingPrice, currencySymbol)}
                           </span>
                         </div>
 
-                        <span className="text-[11px] font-bold text-slate-950 bg-amber-400 group-hover:bg-amber-300 px-3 py-1.5 rounded-xl transition-all shadow-md flex items-center gap-1">
-                          <span>Inspect</span>
-                          <ArrowRight size={12} />
+                        <span className="text-[10px] sm:text-[11px] font-bold text-slate-950 bg-amber-400 group-hover:bg-amber-300 px-2 sm:px-2.5 py-1 rounded-lg transition-all shadow-md flex items-center gap-1 shrink-0">
+                          <span>View</span>
+                          <ArrowRight size={11} />
                         </span>
                       </div>
                     </div>
