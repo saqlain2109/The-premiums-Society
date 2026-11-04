@@ -16,6 +16,7 @@ import {
   Phone,
   Flame,
   ArrowUpRight,
+  MapPin,
 } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 
@@ -57,34 +58,26 @@ export default async function HomePage() {
       <main className="flex-1">
         {/* 1. Ultra Luxury Royalty Hero Section */}
         <section className="relative min-h-[640px] sm:min-h-[720px] flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#02130e] via-[#052219] to-[#071712] border-b border-amber-500/20">
-          {/* Subtle Ambient Radial Lighting Glows */}
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-emerald-500/10 via-amber-500/15 to-transparent blur-[120px] pointer-events-none rounded-full" />
           <div className="absolute bottom-0 right-10 w-96 h-96 bg-emerald-600/10 blur-[100px] pointer-events-none" />
-
-          {/* Background Pattern */}
           <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Content Column */}
             <div className="lg:col-span-7 space-y-7 text-center lg:text-left">
-              {/* Royal Crown Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/40 text-amber-300 text-xs font-semibold tracking-wider shadow-lg shadow-black/40">
                 <Crown size={15} className="text-amber-400 drop-shadow animate-pulse" />
                 <span className="uppercase tracking-[0.2em] font-brand-title text-[11px]">The Royal Couture Collection 2026</span>
               </div>
 
-              {/* Main Headline */}
               <h1 className="font-serif-luxury text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.08]">
                 Where <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-100 bg-clip-text text-transparent">Royalty</span> Meets Modern Elegance.
               </h1>
 
-              {/* Subheading */}
               <p className="text-sm sm:text-lg text-emerald-100/80 leading-relaxed max-w-2xl font-light">
                 Discover handcrafted luxury Panjabis, celebratory silhouettes, and custom couture designed exclusively for the discerning gentlemen & ladies of <span className="text-amber-300 font-medium">The Premiums Society</span>.
               </p>
 
-              {/* CTA Buttons */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
                 <Link
                   href="/shop"
@@ -106,7 +99,6 @@ export default async function HomePage() {
                 </a>
               </div>
 
-              {/* Quick Trust Highlights */}
               <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-stone-400">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
@@ -125,10 +117,8 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right Visual Card with Glowing Golden Frame */}
             <div className="lg:col-span-5 relative flex justify-center">
               <div className="relative group w-72 sm:w-84 md:w-96 aspect-square rounded-full p-2 bg-gradient-to-tr from-amber-500/40 via-emerald-400/20 to-amber-300/40 shadow-2xl shadow-emerald-950/80">
-                {/* Glowing Ring Effect */}
                 <div className="absolute inset-0 rounded-full border border-amber-400/40 animate-pulse" />
                 <div className="w-full h-full rounded-full overflow-hidden bg-[#041a13] p-6 flex flex-col items-center justify-center text-center relative border border-amber-500/30">
                   <img
@@ -137,7 +127,6 @@ export default async function HomePage() {
                     className="w-48 h-48 sm:w-56 sm:h-56 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500"
                   />
                   
-                  {/* Floating Instagram pill */}
                   <a
                     href={instaUrl}
                     target="_blank"
@@ -244,7 +233,6 @@ export default async function HomePage() {
                       {cat.name}
                     </div>
                   )}
-                  {/* Subtle Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#02140e] via-[#02140e]/30 to-transparent" />
                 </div>
 
@@ -312,7 +300,6 @@ export default async function HomePage() {
                           </div>
                         )}
 
-                        {/* Top Badges */}
                         <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
                           <span className="px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-[10px] uppercase tracking-wider shadow-md">
                             Featured
@@ -324,7 +311,6 @@ export default async function HomePage() {
                           )}
                         </div>
 
-                        {/* Category Tag Overlay */}
                         {prod.category && (
                           <div className="absolute bottom-3 left-3">
                             <span className="px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-amber-200 text-[10px] font-medium border border-white/10">
@@ -334,7 +320,6 @@ export default async function HomePage() {
                         )}
                       </div>
 
-                      {/* Product Details */}
                       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
                         <div>
                           <h3 className="font-serif-luxury font-bold text-sm sm:text-base text-stone-100 group-hover:text-amber-300 transition-colors line-clamp-1">
@@ -345,7 +330,6 @@ export default async function HomePage() {
                           </p>
                         </div>
 
-                        {/* Palette preview */}
                         {uniqueColours.length > 0 && (
                           <div className="flex items-center gap-1.5">
                             {uniqueColours.map((col, idx) => (
@@ -363,7 +347,6 @@ export default async function HomePage() {
                           </div>
                         )}
 
-                        {/* Pricing & CTA */}
                         <div className="pt-2 border-t border-white/5 flex items-center justify-between">
                           <div>
                             <span className="text-base sm:text-lg font-black text-amber-300">
@@ -416,9 +399,6 @@ export default async function HomePage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-7">
               {newArrivals.map((prod) => {
-                const totalStock = prod.variants.reduce((s, v) => s + (v.stock || 0), 0);
-                const isOutOfStock = totalStock <= 0;
-
                 return (
                   <Link
                     key={prod.id}
@@ -477,7 +457,6 @@ export default async function HomePage() {
 
         {/* 6. Instagram & Society Atelier Story Section */}
         <section id="about" className="bg-[#02130e] text-white py-24 border-t border-amber-500/20 relative overflow-hidden">
-          {/* Subtle Glow */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 blur-[130px] rounded-full pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
@@ -519,7 +498,6 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right Brand Showcase with Crown Motif */}
             <div className="lg:col-span-5 relative flex justify-center">
               <div className="w-full max-w-md rounded-3xl overflow-hidden border border-amber-500/30 bg-[#052219] p-8 shadow-2xl relative">
                 <div className="absolute top-0 right-0 p-4">
@@ -559,6 +537,98 @@ export default async function HomePage() {
                     </a>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 7. Store Location & Interactive Google Map Section */}
+        <section id="visit-store" className="bg-[#041a13] text-white py-16 sm:py-20 border-t border-amber-500/20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
+                <MapPin size={13} className="text-amber-400" />
+                <span>Visit Our Boutique</span>
+              </div>
+              <h2 className="font-serif-luxury text-2xl sm:text-4xl font-black text-white tracking-tight">
+                Experience The Collection In Person
+              </h2>
+              <p className="text-xs sm:text-sm text-emerald-100/70">
+                {settings?.address || 'Come visit The Premiums Society flagship boutique studio.'}
+              </p>
+            </div>
+
+            <div className="rounded-3xl overflow-hidden border border-amber-500/30 bg-[#02130e] shadow-2xl grid grid-cols-1 lg:grid-cols-12">
+              <div className="p-6 sm:p-10 lg:col-span-5 flex flex-col justify-between space-y-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center">
+                      <MapPin size={24} />
+                    </div>
+                    <div>
+                      <h3 className="font-serif-luxury text-lg font-bold text-white">Store Address</h3>
+                      <p className="text-xs text-amber-300 font-semibold uppercase tracking-wider">The Premiums Society</p>
+                    </div>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-light">
+                    {settings?.address || 'Mumbai, Maharashtra, India'}
+                  </p>
+
+                  <div className="pt-2 space-y-2 text-xs text-emerald-100/80">
+                    <div className="flex items-center gap-2">
+                      <Phone size={14} className="text-amber-400 shrink-0" />
+                      <span>Helpline: <strong>{waPhone}</strong></span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Sparkles size={14} className="text-amber-400 shrink-0" />
+                      <span>Store Hours: 11:00 AM - 9:30 PM (All Days Open)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-white/10 flex flex-wrap gap-3">
+                  {(() => {
+                    const dirLink = settings?.mapEmbedUrl
+                      ? settings.mapEmbedUrl
+                      : (settings?.latitude && settings?.longitude)
+                      ? `https://www.google.com/maps/dir/?api=1&destination=${settings.latitude},${settings.longitude}`
+                      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('The Premiums Society ' + (settings?.address || ''))}`;
+                    return (
+                      <a
+                        href={dirLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black rounded-xl text-xs transition-all shadow-lg flex items-center gap-2"
+                      >
+                        <MapPin size={15} />
+                        <span>Get Turn-by-Turn Directions &rarr;</span>
+                      </a>
+                    );
+                  })()}
+                </div>
+              </div>
+
+              {/* Interactive Map Iframe */}
+              <div className="lg:col-span-7 min-h-[300px] sm:min-h-[380px] bg-stone-900 relative">
+                {(() => {
+                  const embedSrc = (settings?.latitude && settings?.longitude)
+                    ? `https://maps.google.com/maps?q=${settings.latitude},${settings.longitude}&hl=en&z=15&output=embed`
+                    : (settings?.address)
+                    ? `https://maps.google.com/maps?q=${encodeURIComponent(settings.address)}&hl=en&z=15&output=embed`
+                    : `https://maps.google.com/maps?q=Mumbai&hl=en&z=13&output=embed`;
+
+                  return (
+                    <iframe
+                      title="The Premiums Society Location"
+                      src={embedSrc}
+                      className="w-full h-full min-h-[300px] border-0 filter contrast-[1.05]"
+                      allowFullScreen=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  );
+                })()}
               </div>
             </div>
           </div>

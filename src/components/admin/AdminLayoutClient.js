@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import AdminSidebar from './AdminSidebar';
 import Link from 'next/link';
-import { ExternalLink, ShieldCheck, Loader2 } from 'lucide-react';
+import { ExternalLink, ShieldCheck, Loader2, Menu } from 'lucide-react';
 
 export default function AdminLayoutClient({ children, serverUser = null, categoryCount = 0 }) {
   const pathname = usePathname();
@@ -13,6 +13,7 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
   const [user, setUser] = useState(serverUser);
   const [checkingAuth, setCheckingAuth] = useState(!serverUser && !isLoginPage);
   const [storeName, setStoreName] = useState('The Premiums Society');
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
     fetch('/api/settings')
@@ -31,16 +32,13 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
       return;
     }
 
-    // Check token from localStorage if not available from server cookie
     const token = typeof window !== 'undefined' ? localStorage.getItem('ar_admin_token') : null;
     if (!token && !serverUser) {
-      // Not authenticated: redirect to login page
       router.replace('/admin/login');
       return;
     }
 
     if (!user) {
-      // Fetch current authenticated user profile
       fetch('/api/auth/me', {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
@@ -65,12 +63,10 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
     }
   }, [pathname, isLoginPage, serverUser]);
 
-  // If on login page, render child directly without sidebar
   if (isLoginPage) {
     return <div className="w-full">{children}</div>;
   }
 
-  // If checking authentication, show clean loader
   if (checkingAuth) {
     return (
       <div className="min-h-screen w-full bg-[#0F172A] flex flex-col items-center justify-center text-slate-300">
@@ -86,40 +82,55 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
 
   return (
     <div className="min-h-screen bg-slate-100 flex text-slate-800">
-      {/* Collapsible Accordion Sidebar */}
-      <AdminSidebar userRole={currentUser.role || 'ADMIN'} categoryCount={categoryCount} />
+      {/* Collapsible Mobile Drawer & Desktop Accordion Sidebar */}
+      <AdminSidebar
+        userRole={currentUser.role || 'ADMIN'}
+        categoryCount={categoryCount}
+        mobileOpen={mobileSidebarOpen}
+        onCloseMobile={() => setMobileSidebarOpen(false)}
+      />
 
-      {/* Main Area Offset by Sidebar */}
-      <div className="flex-1 flex flex-col min-w-0 pl-16 sm:pl-20 lg:pl-64 transition-all duration-300">
+      {/* Main Area: On Mobile pl-0 (full width free!), on desktop pl-20 / pl-64 */}
+      <div className="flex-1 flex flex-col min-w-0 w-full lg:pl-64 transition-all duration-300">
         {/* Topbar */}
         <header className="h-16 bg-white border-b border-slate-200/90 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            {/* Mobile Hamburger to trigger Admin Sidebar Drawer */}
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200"
+              aria-label="Open Admin Menu"
+            >
+              <Menu size={20} />
+            </button>
+
             <div className="flex items-center gap-2">
-              <ShieldCheck size={20} className="text-emerald-600" />
-              <span className="font-extrabold text-slate-900 text-sm tracking-tight hidden sm:inline">
+              <ShieldCheck size={18} className="text-emerald-600 shrink-0" />
+              <span className="font-extrabold text-slate-900 text-xs sm:text-sm tracking-tight truncate max-w-[150px] sm:max-w-none">
                 {storeName}
               </span>
             </div>
-            <span className="text-slate-300 hidden sm:inline">|</span>
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-slate-300 hidden md:inline">|</span>
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider hidden md:inline">
               Store Administration
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* View Live Storefront Button */}
             <Link
               href="/"
               target="_blank"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold transition-colors"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[11px] sm:text-xs font-bold transition-colors"
             >
-              <ExternalLink size={14} />
-              <span>View Public Store</span>
+              <ExternalLink size={13} />
+              <span className="hidden sm:inline">View Public Store</span>
+              <span className="sm:hidden">Store</span>
             </Link>
 
             {/* Administrator Profile Pill */}
-            <div className="flex items-center gap-2.5 pl-2 border-l border-slate-200">
-              <div className="w-8 h-8 rounded-full bg-slate-900 text-emerald-400 font-bold text-xs flex items-center justify-center">
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
+              <div className="w-8 h-8 rounded-full bg-slate-900 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0">
                 {currentUser.name ? currentUser.name[0].toUpperCase() : 'A'}
               </div>
               <div className="hidden md:block text-left">
@@ -132,7 +143,7 @@ export default function AdminLayoutClient({ children, serverUser = null, categor
           </div>
         </header>
 
-        {/* Page Content */}
+        {/* Page Content: Clean full width on phone with no sidebar collision */}
         <main className="flex-1 p-3 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
           {children}
         </main>

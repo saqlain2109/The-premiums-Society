@@ -77,6 +77,9 @@ export async function PUT(req) {
         instagramUrl: instagramUrl !== undefined ? instagramUrl : null,
         whatsappUrl: whatsappUrl !== undefined ? whatsappUrl : null,
         address: address !== undefined ? address : null,
+        latitude: latitude !== undefined && latitude !== '' ? parseFloat(latitude) : null,
+        longitude: longitude !== undefined && longitude !== '' ? parseFloat(longitude) : null,
+        mapEmbedUrl: mapEmbedUrl !== undefined ? mapEmbedUrl : null,
       },
       create: {
         id: 'default',
@@ -96,6 +99,9 @@ export async function PUT(req) {
         instagramUrl: instagramUrl || null,
         whatsappUrl: whatsappUrl || null,
         address: address || null,
+        latitude: latitude ? parseFloat(latitude) : null,
+        longitude: longitude ? parseFloat(longitude) : null,
+        mapEmbedUrl: mapEmbedUrl || null,
       },
     });
 
