@@ -130,6 +130,9 @@ model StoreSettings {
   instagramUrl          String?  @default("https://www.instagram.com/the_premiumss?xtok=MXBtOTNoc2tiM3RxMg==")
   whatsappUrl           String?  @default("https://wa.me/919920517851")
   address               String?
+  latitude              Float?
+  longitude             Float?
+  mapEmbedUrl           String?
   updatedAt             DateTime @updatedAt
 }
 
