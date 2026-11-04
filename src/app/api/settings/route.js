@@ -62,6 +62,7 @@ export async function PUT(req) {
       latitude,
       longitude,
       mapEmbedUrl,
+      storeHours,
     } = body;
 
     const parsedLat = (latitude !== undefined && latitude !== null && latitude !== '') ? parseFloat(latitude) : null;
