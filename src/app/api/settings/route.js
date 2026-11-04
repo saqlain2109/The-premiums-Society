@@ -21,6 +21,9 @@ export async function GET() {
           currencySymbol: '₹',
           whatsappUrl: 'https://wa.me/919920517851',
           address: null,
+          latitude: null,
+          longitude: null,
+          mapEmbedUrl: null,
         },
       });
     }
@@ -56,7 +59,13 @@ export async function PUT(req) {
       instagramUrl,
       whatsappUrl,
       address,
+      latitude,
+      longitude,
+      mapEmbedUrl,
     } = body;
+
+    const parsedLat = (latitude !== undefined && latitude !== null && latitude !== '') ? parseFloat(latitude) : null;
+    const parsedLng = (longitude !== undefined && longitude !== null && longitude !== '') ? parseFloat(longitude) : null;
 
     const updated = await prisma.storeSettings.upsert({
       where: { id: 'default' },
@@ -77,8 +86,8 @@ export async function PUT(req) {
         instagramUrl: instagramUrl !== undefined ? instagramUrl : null,
         whatsappUrl: whatsappUrl !== undefined ? whatsappUrl : null,
         address: address !== undefined ? address : null,
-        latitude: latitude !== undefined && latitude !== '' ? parseFloat(latitude) : null,
-        longitude: longitude !== undefined && longitude !== '' ? parseFloat(longitude) : null,
+        latitude: parsedLat,
+        longitude: parsedLng,
         mapEmbedUrl: mapEmbedUrl !== undefined ? mapEmbedUrl : null,
       },
       create: {
@@ -99,8 +108,8 @@ export async function PUT(req) {
         instagramUrl: instagramUrl || null,
         whatsappUrl: whatsappUrl || null,
         address: address || null,
-        latitude: latitude ? parseFloat(latitude) : null,
-        longitude: longitude ? parseFloat(longitude) : null,
+        latitude: parsedLat,
+        longitude: parsedLng,
         mapEmbedUrl: mapEmbedUrl || null,
       },
     });
